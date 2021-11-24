@@ -12,12 +12,16 @@ class LinearModel {
      *
      */
     constructor(data) {
-        this.data = data;
         if (!data) {
             throw "It is necessary to provide the dataset";
         }
         if (data.length < 2) {
             throw "In order to design a linear model, you must provide at least 2 data points";
+        }
+        try {
+            this.data = data.map(el => Number(el));
+        } catch (e) {
+            throw `Some value in the dataset is invalid, or impossible to convert to number, \nError: ${e}`;
         }
     }
 
@@ -35,7 +39,7 @@ class LinearModel {
      * @method
      * @returns {number} length of the dataset
      */
-    datasetLength() {
+    getDatasetLength() {
         return this.data.length;
     }
 
@@ -45,86 +49,168 @@ class LinearModel {
      * behaviour over time, we need to provide the
      * x axis values to complete the data frame.
      */
-    #xAxisValues() {
-        let x = [...Array(datasetLength()).keys()];
+    getXAxisValues() {
+        let x = [...Array(this.getDatasetLength()).keys()];
         x.push(x[x.length - 1] + 1);
         x.shift();
-        this.xAxisValues = [...x];
+        return [...x];
+    }
+
+    /**
+     * @method
+     * @returns {number} sum of all dataset values
+     */
+    getSumOfDatasetValues() {
+        let sumDataset = 0;
+        for (const iterator of this.data) {
+            sumDataset += iterator;
+        }
+        return sumDataset;
+    }
+    /**
+     * @method
+     * @returns {number} sum of all x axis values
+     */
+    getSumOfXValues() {
+        let sumX = 0;
+        for (const iterator of this.getXAxisValues()) {
+            sumX += iterator;
+        }
+        return sumX;
+    }
+
+    /**
+     * @method
+     * @returns {number} returns the slope of the "chart"
+     * which consists of the tangent of the angle
+     * which has the formula:
+     * let the sum of equivalent elements times the dataset length as a
+     * let the multiplication of the sum of all the values in both the datasets as b
+     * let the sum of all squared x values times the dataset length as c
+     * let the squared sum of all x values as d
+     * @returns     slope = (a - b) / (c - d)
+     */
+    getSlope() {
+        // slope => tan(x)
+        let slope =
+            (this.#getSumOfEquivalentElementsTimesLength() -
+                this.#getMultiplicationOfAxisValuesSum()) /
+            (this.#getXValuesSquaredSummedTimesLength() -
+                this.#getSumOfXValuesSquaredTimesLength());
+        return slope;
+    }
+
+    /**
+     * @method
+     * @returns {number} returns the sum of equivalent
+     * elements times the dataset length
+     */
+    #getSumOfEquivalentElementsTimesLength() {
+        let sum = 0;
+        for (let i in this.getXAxisValues()) {
+            sum += this.getXAxisValues()[i] * this.data[i];
+        }
+        return this.getDatasetLength() * sum;
+    }
+
+    /**
+     * @method
+     * @returns {number} returns the multiplication of the sum of
+     * all the values in both the datasets
+     */
+    #getMultiplicationOfAxisValuesSum() {
+        return this.getSumOfDatasetValues() * this.getSumOfXValues();
+    }
+
+    /**
+     * @method
+     * @returns {number} returns the sum of all squared x values
+     * times the dataset length
+     */
+    #getXValuesSquaredSummedTimesLength() {
+        let xValuesSquared = this.getXAxisValues().map(el => el ** 2);
+        let sumOfXValuesSquared = [...xValuesSquared].reduce(
+            (ac, el) => (ac += el)
+        );
+        return this.getDatasetLength() * sumOfXValuesSquared;
+    }
+
+    /**
+     * @method
+     * @returns {number} returns the squared sum of all x values
+     */
+    #getSumOfXValuesSquaredTimesLength() {
+        return this.getSumOfXValues() ** 2;
+    }
+
+    /**
+     * @method
+     * @returns {number} returns the angle in radians
+     * which consists of the arc tangent of the slope
+     * which corresponds of the tangent of the angle
+     * this way arctan(x)/tan(x) = x rad
+     */
+    getAngleInRadians() {
+        return Math.atan(this.getSlope());
+    }
+
+    /**
+     * @method
+     * @returns {number} returns the angle in degrees
+     * which consists of the conversion of the angle in
+     * radians to degrees
+     */
+    getAngleInDegrees() {
+        return LinearModel.radsToDegs(this.getAngleInRadians());
+    }
+
+    /**
+     * @method
+     * @returns {string} returns the overall behaviour
+     * of the dataset, being the options:
+     *  @constant for a dataset that is nearly not changing significantly
+     *  @increase for a dataset with an increasing pattern
+     *  @reduction for a dataset with an decreasing pattern
+     */
+    getDatasetBehavior() {
+        let deg = this.getAngleInDegrees();
+        if (deg >= -1 && deg <= 1) {
+            return "constant";
+        }
+        if (deg > 1) {
+            return "increase";
+        }
+        return "reduction";
+    }
+
+    /**
+     * @method
+     * @returns {string} returns the overall behavioural instensity
+     * of the dataset, being the options:
+     *  @steady for a dataset that is nearly not changing significantly(constant)
+     *  @mild for a dataset with up to 10° of inclination
+     *  @moderate for a dataset with up to 25° of inclination
+     *  @significant for a dataset with up to 40° of inclination
+     *  @drastic for a dataset with more than 40° of inclination
+     */
+    getDatasetBehavioralIntensity() {
+        let deg = Math.abs(this.getAngleInDegrees());
+        if (deg <= 1) {
+            return "steady";
+        }
+        if (deg < 10) {
+            return "mild";
+        }
+        if (deg < 25) {
+            return "moderate";
+        }
+        if (deg < 40) {
+            return "significant";
+        }
+        return "drastic";
     }
 }
 
-let lm = new LinearModel();
-lm.datasetLength();
-// const getTrendDeg = medicoes => {
-//     const radsToDegs = rad => (rad * 180) / Math.PI;
-
-//     let n = medicoes.length;
-//     if (!n) {
-//         return 0;
-//     }
-//     let y = [...medicoes];
-//     let x = [...Array(n).keys()];
-//     x.push(x[x.length - 1] + 1);
-//     x.shift();
-
-//     //a
-//     let soma = 0;
-//     for (let i in x) {
-//         soma += x[i] * y[i];
-//     }
-//     let a = n * soma;
-//     //a
-
-//     // b
-//     let sumX = 0;
-//     for (const iterator of x) {
-//         sumX += iterator;
-//     }
-//     let sumY = 0;
-//     for (const iterator of y) {
-//         sumY += iterator;
-//     }
-//     let b = sumY * sumX;
-//     // b
-
-//     //c
-//     let c = n * [...x.map(el => el ** 2)].reduce((ac, el) => (ac += el));
-//     //c
-
-//     //d
-//     let d = sumX ** 2;
-//     //d
-
-//     // inclination angle in degrees
-//     let deg = radsToDegs(Math.atan(slope));
-//     // inclination angle in degrees
-
-//     return deg;
-// };
-
-// const getTrendBehavior = deg => {
-//     let behaviour, intensity;
-//     if (deg >= -1 && deg <= 1) {
-//         behaviour = "constant";
-//         intensity = "";
-//     } else {
-//         if (deg >= 0) {
-//             behaviour = "increase";
-//         } else {
-//             behaviour = "decrease"; // "atenuamento"
-//         }
-
-//         if (Math.abs(deg) < 10) {
-//             intensity = "mild";
-//         } else if (Math.abs(deg) < 25) {
-//             intensity = "moderate";
-//         } else if (Math.abs(deg) < 40) {
-//             intensity = "significant";
-//         } else {
-//             intensity = "drastic";
-//         }
-//     }
-//     return {behaviour, intensity};
-// };
+let lm = new LinearModel([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25]);
 
 module.exports = LinearModel;

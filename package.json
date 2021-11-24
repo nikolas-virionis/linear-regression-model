@@ -2,11 +2,9 @@
     "name": "linear-regression",
     "version": "1.0.0",
     "description": "A npm package to make it easier to deal with a bunch of values, and try to model them in one of the most used mathematical models",
-    "main": "script.js",
+    "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\"",
-        "start": "node script.js",
-        "dev": "nodemon script.js"
+        "test": "echo \"Error: no test specified\""
     },
     "repository": {
         "type": "git",

@@ -84,10 +84,10 @@ class LinearModel {
      * @returns {number} returns the slope of the "chart"
      * which consists of the tangent of the angle
      * which has the formula:
-     * @let the sum of equivalent elements times the dataset length as a
-     * @let the multiplication of the sum of all the values in both the datasets as b
-     * @let the sum of all squared x values times the dataset length as c
-     * @let the squared sum of all x values as d
+     * - let the sum of equivalent elements times the dataset length as a
+     * - let the multiplication of the sum of all the values in both the datasets as b
+     * - let the sum of all squared x values times the dataset length as c
+     * - let the squared sum of all x values as d
      * @returns     slope = (a - b) / (c - d)
      */
     getSlope() {
@@ -168,9 +168,9 @@ class LinearModel {
      * @method
      * @returns {string} returns the overall behaviour
      * of the dataset, being the options:
-     *  @constant for a dataset that is nearly not changing significantly
-     *  @increase for a dataset with an increasing pattern
-     *  @reduction for a dataset with an decreasing pattern
+     *  - constant for a dataset that is nearly not changing significantly
+     *  - increase for a dataset with an increasing pattern
+     *  - reduction for a dataset with an decreasing pattern
      */
     getDatasetBehavior() {
         let deg = this.getAngleInDegrees();
@@ -187,11 +187,11 @@ class LinearModel {
      * @method
      * @returns {string} returns the overall behavioural instensity
      * of the dataset, being the options:
-     *  @steady for a dataset that is nearly not changing significantly(constant)
-     *  @mild for a dataset with up to 10° of inclination
-     *  @moderate for a dataset with up to 25° of inclination
-     *  @significant for a dataset with up to 40° of inclination
-     *  @drastic for a dataset with more than 40° of inclination
+     *  - steady for a dataset that is nearly not changing significantly(constant)
+     *  - mild for a dataset with up to 10° of inclination
+     *  - moderate for a dataset with up to 25° of inclination
+     *  - significant for a dataset with up to 40° of inclination
+     *  - drastic for a dataset with more than 40° of inclination
      */
     getDatasetBehavioralIntensity() {
         let deg = Math.abs(this.getAngleInDegrees());
@@ -226,9 +226,9 @@ class LinearModel {
      * the subtraction between the sum of the dataset values
      * and the slope times the sum of x axis values
      * and the length of the dataset, being the formula:
-     * @let the sum of the dataset values as a
-     * @let the slope times the sum of the x axis values as b
-     * @let the length of the dataset as n
+     * - let the sum of the dataset values as a
+     * - let the slope times the sum of the x axis values as b
+     * - let the length of the dataset as n
      * @returns  linearCoefficient = (a - b) / n
      */
     getLinearCoefficient() {

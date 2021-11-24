@@ -84,10 +84,10 @@ class LinearModel {
      * @returns {number} returns the slope of the "chart"
      * which consists of the tangent of the angle
      * which has the formula:
-     * let the sum of equivalent elements times the dataset length as a
-     * let the multiplication of the sum of all the values in both the datasets as b
-     * let the sum of all squared x values times the dataset length as c
-     * let the squared sum of all x values as d
+     * @let the sum of equivalent elements times the dataset length as a
+     * @let the multiplication of the sum of all the values in both the datasets as b
+     * @let the sum of all squared x values times the dataset length as c
+     * @let the squared sum of all x values as d
      * @returns     slope = (a - b) / (c - d)
      */
     getSlope() {
@@ -209,8 +209,62 @@ class LinearModel {
         }
         return "drastic";
     }
-}
 
-let lm = new LinearModel([1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25]);
+    /**
+     * @method
+     * @returns {number} returns the multiplication of the
+     * slope and the sum of all x axis values
+     */
+    #getSlopeTimesSumOfXValues() {
+        return this.getSlope() * this.getSumOfXValues();
+    }
+
+    /**
+     * @method
+     * @returns {number} returns the linear coefficient
+     * which is represented as the division between
+     * the subtraction between the sum of the dataset values
+     * and the slope times the sum of x axis values
+     * and the length of the dataset, being the formula:
+     * @let the sum of the dataset values as a
+     * @let the slope times the sum of the x axis values as b
+     * @let the length of the dataset as n
+     * @returns  linearCoefficient = (a - b) / n
+     */
+    getLinearCoefficient() {
+        return (
+            (this.getSumOfDatasetValues() - this.#getSlopeTimesSumOfXValues()) /
+            this.getDatasetLength()
+        );
+    }
+
+    /**
+     * @method
+     * @returns {object} returns the angular coefficient(slope) and
+     * linear coefficient(y-intercept)
+     */
+    getCoefficients() {
+        return {
+            angular: this.getSlope(),
+            linear: this.getLinearCoefficient()
+        };
+    }
+
+    /**
+     * @method
+     * @returns {object} returns equation as a string to be better displayed
+     * and visualized and the function itself to be used and make predictions
+     * ofthe dataset most probable behaviour overtime
+     *
+     */
+    getLinearEquation() {
+        return {
+            stringEquation: `f(x) = ${this.getSlope().toFixed(
+                3
+            )}x + ${this.getLinearCoefficient().toFixed(3)}`,
+            function: x => x * this.getSlope() + this.getLinearCoefficient()
+        };
+    }
+}
 
 module.exports = LinearModel;

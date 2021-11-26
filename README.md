@@ -14,19 +14,22 @@ An npm package to make it easier to deal with a handful of values, and try to mo
  older versions shouldn't have any issues, as the package does not use any <br> other npm packages, or
  fancy, new methods, not supported by older versions
  
+  - Installing the module<br>
+~~~powershell
+npm install linear-regression-model
+~~~
   - Importing the module<br>
-
 First, there is the Linear Regression model between two different datasets, in relation to each other<br>
 Which will look like something similar to this:
  ~~~ javascript
- const {LinearModel} = require("linear-regression");
+ const {LinearModel} = require("linear-regression-model");
  // if it is preferred not to use destructuring, or constants use
- // var LinearModel = require("linear-regression").LinearModel;
+ // var LinearModel = require("linear-regression-model").LinearModel;
  ~~~
 Or if the use case for this is pending more to the behavior of one single dataset<br>
 overtime, this will be more fitting:
  ~~~ javascript
- const {LinearModelOverTime} = require("linear-regression");
+ const {LinearModelOverTime} = require("linear-regression-model");
  // if it is preferred not to use destructuring, or constants use
  // var LinearModelOverTime = require("linear-regression").LinearModelOverTime;
  ~~~ 

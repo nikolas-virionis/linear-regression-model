@@ -19,10 +19,12 @@ class LinearModel {
             throw "In order to design a linear model, you must provide at least 2 data points";
         }
         try {
-            this.data = data.map(el => Number(el));
+            data = data.map(el => Number(el));
         } catch (e) {
-            throw `Some value in the dataset is invalid, or impossible to convert to number, \nError: ${e}`;
+            throw `Some value in the dataset is invalid, or impossible to convert it to number, \nError: ${e}`;
         }
+        this.data = data;
+        this.xValues = getXAxisValues();
     }
 
     /**
@@ -73,7 +75,7 @@ class LinearModel {
      */
     getSumOfXValues() {
         let sumX = 0;
-        for (const iterator of this.getXAxisValues()) {
+        for (const iterator of this.xValues) {
             sumX += iterator;
         }
         return sumX;
@@ -107,8 +109,8 @@ class LinearModel {
      */
     #getSumOfEquivalentElementsTimesLength() {
         let sum = 0;
-        for (let i in this.getXAxisValues()) {
-            sum += this.getXAxisValues()[i] * this.data[i];
+        for (let i in this.xValues) {
+            sum += this.xValues[i] * this.data[i];
         }
         return this.getDatasetLength() * sum;
     }
@@ -128,7 +130,7 @@ class LinearModel {
      * times the dataset length
      */
     #getXValuesSquaredSummedTimesLength() {
-        let xValuesSquared = this.getXAxisValues().map(el => el ** 2);
+        let xValuesSquared = this.xValues.map(el => el ** 2);
         let sumOfXValuesSquared = [...xValuesSquared].reduce(
             (ac, el) => (ac += el)
         );
@@ -267,4 +269,4 @@ class LinearModel {
     }
 }
 
-module.exports = LinearModel;
+module.exports = {LinearModel};

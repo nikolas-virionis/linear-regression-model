@@ -1,4 +1,4 @@
-# linear-regression
+# linear-regression-model
 An npm package to make it easier to deal with a handful of values, and try to model them in one of the most used mathematical models, with an R-like accuracy algorithm
 
 ![npm logo](https://lh3.googleusercontent.com/proxy/kKCJwwtr5ORcrnPQUayou44sbiVesfc00NbLpdvwNwLUVzcvHQeQqg6JeaukkMeIqMAcJ8b94SuA1yRGu1icybno-vTK7ztKi3gZkmdL0z_0t69iMebOZPc)

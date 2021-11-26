@@ -33,15 +33,16 @@ overtime, this will be more fitting:
 ## Instantiate the classes
  ~~~ javascript
  const lm = new LinearModel([1, 2, 3, 2, 3, 4], [3, 4, 5, 4, 5, 6]);
- // mandatory to pass two, same sized, all number, arrays, being the orientation (x, y),
- // being x the independent variable and y the dependent: y changes according to how x changes, basically
+ // mandatory to pass two, same sized, all number, arrays, being the 
+ // orientation (x, y), being x the independent variable and y the 
+ // dependent: y changes according to how x changes, basically
  ~~~ 
  or 
  ~~~ javascript
  const lm = new LinearModelOverTime([1, 2, 3, 2, 3, 4, 3, 4, 5, 4, 5, 6]);
- // mandatory to pass one, all number, array, being the orientation y, the dependent variable: 
- // y changes according to how x changes, the later is generated automatically for a better 
- // representation of the behavior overtime
+ // mandatory to pass one, all number, array, being the orientation y, the 
+ //dependent variable: y changes according to how x changes, the later is 
+ // generated automatically for a better representation of the behavior overtime
  ~~~ 
  
  Let it be clear, it is necessary to pass all number arrays, with more than 1 value,<br>
@@ -56,7 +57,7 @@ Both the classes have similar methods, the biggest difference between the classe
 if the X axis dataset is informed or generated, therefore, the method will be showed using <br>
 the LinearModel class, the use for the LinearModelOverTime class is the exact same tough
 
-- Just to make it clear, it is necessary to pass the parameters as said in instatiating the class, above
+- Just to make it clear, it is necessary to pass the parameters as said in [instatiating the class](#instantiate-the-classes), above
 
 - getDataset
 ~~~ javascript
@@ -69,7 +70,7 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  lm.getXAxisValues()
  // returns the dataset in the X axis, informed previously or not
 ~~~ 
-- radsToDegs -static-
+- (static) radsToDegs
 ~~~ javascript
  LinearModel.radsToDegs(rad)
  // converts an angle in radians to degrees
@@ -80,3 +81,14 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  lm.getDatasetLength()
  // returns the dataset length
 ~~~ 
+- getSumOfDatasetValues
+~~~ javascript
+ lm.getSumOfDatasetValues()
+ // returns the sum of all the elements in the dataset on y azis
+~~~ 
+- getSumOfXValues
+~~~ javascript
+ lm.getSumOfXValues()
+ // returns the sum of all the elements in the dataset on x azis
+~~~ 
+

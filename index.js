@@ -1,9 +1,19 @@
 /**
  * @module linear-regression
- * Represents the linear model class.
+ * Represents the linear model class
+ * of a dataset behaviour overtime
  * @author Nikolas B Virionis <nikolas.virionis@bandtec.com.br>
  */
-class LinearModel {
+class LinearModelOverTime {
+    /**
+     * @attributes
+     * - _data
+     * - _xValues <br>
+     * Both protected in order to only be accessed internally, <br>
+     * and in its subclass
+     */
+    _data;
+    _xValues;
     /**
      * @constructor
      * @param {number[]} data
@@ -18,13 +28,16 @@ class LinearModel {
         if (data.length < 2) {
             throw "In order to design a linear model, you must provide at least 2 data points";
         }
+        if (!Array.isArray(data)) {
+            throw "Constructor parameter is not an array";
+        }
         try {
             data = data.map(el => Number(el));
         } catch (e) {
-            throw `Some value in the dataset is invalid, or impossible to convert it to number, \nError: ${e}`;
+            throw `Some value in the dataset is invalid, or impossible to convert to number, \nError: ${e}`;
         }
-        this.data = data;
-        this.xValues = getXAxisValues();
+        this._data = data;
+        this._xValues = LinearModelOverTime._getXAxisValues(data);
     }
 
     /**
@@ -42,7 +55,26 @@ class LinearModel {
      * @returns {number} length of the dataset
      */
     getDatasetLength() {
-        return this.data.length;
+        return this._data.length;
+    }
+    /**
+     * @method
+     * Protected method for internal use, right on class creation
+     * @param {number[]} dataset
+     * returns the length of the dataset
+     * @returns {number}
+     */
+    static _getDatasetLength(dataset) {
+        return dataset.length;
+    }
+
+    /**
+     * @method
+     * returns the dataset on the Y axis
+     * @returns {number[]}
+     */
+    getDataset() {
+        return this._data;
     }
 
     /**
@@ -57,6 +89,19 @@ class LinearModel {
         x.shift();
         return [...x];
     }
+    /**
+     * returns the X axis dataset, when not informed previously
+     * @param {number[]} dataset
+     * @returns {number[]}
+     */
+    static _getXAxisValues(dataset) {
+        let x = [
+            ...Array(LinearModelOverTime._getDatasetLength(dataset)).keys()
+        ];
+        x.push(x[x.length - 1] + 1);
+        x.shift();
+        return [...x];
+    }
 
     /**
      * @method
@@ -64,7 +109,7 @@ class LinearModel {
      */
     getSumOfDatasetValues() {
         let sumDataset = 0;
-        for (const iterator of this.data) {
+        for (const iterator of this._data) {
             sumDataset += iterator;
         }
         return sumDataset;
@@ -75,7 +120,7 @@ class LinearModel {
      */
     getSumOfXValues() {
         let sumX = 0;
-        for (const iterator of this.xValues) {
+        for (const iterator of this._xValues) {
             sumX += iterator;
         }
         return sumX;
@@ -109,8 +154,8 @@ class LinearModel {
      */
     #getSumOfEquivalentElementsTimesLength() {
         let sum = 0;
-        for (let i in this.xValues) {
-            sum += this.xValues[i] * this.data[i];
+        for (let i in this._xValues) {
+            sum += this._xValues[i] * this._data[i];
         }
         return this.getDatasetLength() * sum;
     }
@@ -130,7 +175,7 @@ class LinearModel {
      * times the dataset length
      */
     #getXValuesSquaredSummedTimesLength() {
-        let xValuesSquared = this.xValues.map(el => el ** 2);
+        let xValuesSquared = this._xValues.map(el => el ** 2);
         let sumOfXValuesSquared = [...xValuesSquared].reduce(
             (ac, el) => (ac += el)
         );
@@ -163,7 +208,7 @@ class LinearModel {
      * radians to degrees
      */
     getAngleInDegrees() {
-        return LinearModel.radsToDegs(this.getAngleInRadians());
+        return LinearModelOverTime.radsToDegs(this.getAngleInRadians());
     }
 
     /**
@@ -256,7 +301,7 @@ class LinearModel {
      * @method
      * @returns {object} returns equation as a string to be better displayed
      * and visualized and the function itself to be used and make predictions
-     * ofthe dataset most probable behaviour overtime
+     * ofthe dataset most probable behaviour
      *
      */
     getLinearEquation() {
@@ -269,4 +314,54 @@ class LinearModel {
     }
 }
 
-module.exports = {LinearModel};
+/**
+ * @module linear-regression
+ * Represents the linear model class
+ * of a dataset behaviour in relation
+ * to its counterpart
+ * @author Nikolas B Virionis <nikolas.virionis@bandtec.com.br>
+ */
+class LinearModel extends LinearModelOverTime {
+    /**
+     * @constructor
+     * @param {number[]} datasetX
+     * @param {number[]} datasetY
+     * The datasets to be modeled,
+     * on they're behavior in relation
+     * to one another.
+     */
+    constructor(datasetX, datasetY) {
+        if (!datasetX || !datasetY) {
+            throw "Two arrays are necessary for LinearModel";
+        }
+        if (datasetX.length != datasetY.length) {
+            throw "The arrays have different lengths, which is not allowed";
+        }
+        if (!Array.isArray(datasetX) || !Array.isArray(datasetY)) {
+            throw "Constructor parameter is not an array";
+        }
+        if (datasetX.length < 2) {
+            throw "In order to design a linear model, you must provide at least 2 data points";
+        }
+        try {
+            datasetY = datasetY.map(el => Number(el));
+            datasetX = datasetX.map(el => Number(el));
+        } catch (e) {
+            throw `Some value in one of the datasets is invalid, or impossible to convert to number, \nError: ${e}`;
+        }
+        super(datasetY);
+        this._xValues = datasetX;
+    }
+
+    /**
+     *
+     * @override Overriden from the LinearModelOverTime class
+     * @returns {number} returns the x axis dataset which,
+     * on this class instance, was informed
+     */
+    getXAxisValues() {
+        return this._xValues;
+    }
+}
+
+module.exports = {LinearModelOverTime, LinearModel};

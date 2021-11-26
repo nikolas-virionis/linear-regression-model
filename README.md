@@ -105,7 +105,8 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
 - getAngleInDegrees
 ~~~ javascript
  lm.getAngleInDegrees()
- // returns the inclination angle in degrees, like 43°, for example 3/4 rad ~~ 43°
+ // returns the inclination angle in degrees, like 43°, 
+ // for example 3/4 rad ~~ 43°
 ~~~ 
 - getDatasetBehavior
 ~~~ javascript
@@ -127,4 +128,17 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  lm.getLinearCoefficient()
  // returns the linear coefficient of the equation: the "n" 
  //on the y = mx + n function
+~~~ 
+- getCoefficients
+~~~ javascript
+ lm.getCoefficients()
+ // returns both the linear coefficient and the slope 
+ //of the equation: the "m" and the "n" on y = mx + n
+~~~ 
+- getLinearEquation
+~~~ javascript
+ lm.getLinearEquation()
+ // returns both the function as a string to be displayed
+ // and an actual js function to make predictions, for example
+ // function(x): returns Y, using the same method as the dataset
 ~~~ 

@@ -4,8 +4,9 @@ An npm package to make it easier to deal with a handful of values, and try to mo
 ![npm logo](https://lh3.googleusercontent.com/proxy/kKCJwwtr5ORcrnPQUayou44sbiVesfc00NbLpdvwNwLUVzcvHQeQqg6JeaukkMeIqMAcJ8b94SuA1yRGu1icybno-vTK7ztKi3gZkmdL0z_0t69iMebOZPc)
 
 - [Setup](#setup)
+- [Methods](#methods)
 
-## Setup
+## Setup 
 
 ### Requirements:
   - Node.js installed<br>
@@ -13,19 +14,69 @@ An npm package to make it easier to deal with a handful of values, and try to mo
  older versions shouldn't have any issues, as the package does not use any <br> other npm packages, or
  fancy, new methods, not supported by older versions
  
-  - Importing the module
+  - Importing the module<br>
+
+First, there is the Linear Regression model between two different datasets, in relation to each other<br>
+Which will look like something similar to this:
  ~~~ javascript
- const LinearModel = require("linear-regression");
+ const {LinearModel} = require("linear-regression");
+ // if it is preferred not to use destructuring, or constants use
+ // var LinearModel = require("linear-regression").LinearModel;
  ~~~
-  - Instantiate the class
+Or if the use case for this is pending more to the behavior of one single dataset<br>
+overtime, this will be more fitting:
  ~~~ javascript
- const lm = new LinearModel([1, 2, 3, 2, 3, 4, 3, 4, 5, 4, 5, 6]);
- ~~~
- Let it be clear, it is necessary to pass an all number array, with more than 1 value,<br>
+ const {LinearModelOverTime} = require("linear-regression");
+ // if it is preferred not to use destructuring, or constants use
+ // var LinearModelOverTime = require("linear-regression").LinearModelOverTime;
+ ~~~ 
+## Instantiate the classes
+ ~~~ javascript
+ const lm = new LinearModel([1, 2, 3, 2, 3, 4], [3, 4, 5, 4, 5, 6]);
+ // mandatory to pass two, same sized, all number, arrays, being the orientation (x, y),
+ // being x the independent variable and y the dependent: y changes according to how x changes, basically
+ ~~~ 
+ or 
+ ~~~ javascript
+ const lm = new LinearModelOverTime([1, 2, 3, 2, 3, 4, 3, 4, 5, 4, 5, 6]);
+ // mandatory to pass one, all number, array, being the orientation y, the dependent variable: 
+ // y changes according to how x changes, the later is generated automatically for a better 
+ // representation of the behavior overtime
+ ~~~ 
+ 
+ Let it be clear, it is necessary to pass all number arrays, with more than 1 value,<br>
  in order for the algorithm to work properly, it will try to convert all the elements<br>
- to numbers, but if that is not possible, the code will crash. it also checks the quantity<br>
- of values in the dataset, since a linear regression model  of one single data point may not <br>
- make any sense whatsoever
+ to numbers, but if that is not possible, the code will crash.
  <br>
  <br>
  
+
+## Methods
+Both the classes have similar methods, the biggest difference between the classes being<br>
+if the X axis dataset is informed or generated, therefore, the method will be showed using <br>
+the LinearModel class, the use for the LinearModelOverTime class is the exact same tough
+
+- Just to make it clear, it is necessary to pass the parameters as said in instatiating the class, above
+
+- getDataset
+~~~ javascript
+ lm.getDataset()
+ // returns the dataset Informed in the Y axis
+~~~ 
+
+- getXAxisValues
+~~~ javascript
+ lm.getXAxisValues()
+ // returns the dataset in the X axis, informed previously or not
+~~~ 
+- radsToDegs -static-
+~~~ javascript
+ LinearModel.radsToDegs(rad)
+ // converts an angle in radians to degrees
+ // returns the angle in degrees
+~~~ 
+- getDatasetLength
+~~~ javascript
+ lm.getDatasetLength()
+ // returns the dataset length
+~~~ 

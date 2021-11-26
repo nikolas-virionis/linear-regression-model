@@ -91,4 +91,40 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  lm.getSumOfXValues()
  // returns the sum of all the elements in the dataset on x azis
 ~~~ 
-
+- getSlope
+~~~ javascript
+ lm.getSlope()
+ // returns the slope of the equation: the "m" on the y = mx + n function
+ // which is the tangent of the inclination angle
+~~~ 
+- getAngleInRadians
+~~~ javascript
+ lm.getAngleInRadians()
+ // returns the inclination angle in radians, like 3/4 meaning  3/4 rad
+~~~ 
+- getAngleInDegrees
+~~~ javascript
+ lm.getAngleInDegrees()
+ // returns the inclination angle in degrees, like 43°, for example 3/4 rad ~~ 43°
+~~~ 
+- getDatasetBehavior
+~~~ javascript
+ lm.getDatasetBehavior()
+ // returns the overall macro behaviour of the dataset
+~~~ 
+- getDatasetBehavioralIntensity
+~~~ javascript
+ lm.getDatasetBehavioralIntensity()
+ // returns the intensity of the behaviour previously measured
+~~~ 
+- getLinearCoefficient
+~~~ javascript
+ lm.getDatasetBehavioralIntensity()
+ // returns the intensity of the behaviour previously measured
+~~~ 
+- getLinearCoefficient
+~~~ javascript
+ lm.getLinearCoefficient()
+ // returns the linear coefficient of the equation: the "n" 
+ //on the y = mx + n function
+~~~ 

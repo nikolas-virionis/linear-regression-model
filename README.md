@@ -19,20 +19,30 @@ An npm package to make it easier to deal with a handful of values, and try to mo
 npm install linear-regression-model
 ~~~
   - Importing the module<br>
+
 First, there is the Linear Regression model between two different datasets, in relation to each other<br>
 Which will look like something similar to this:
  ~~~ javascript
  const {LinearModel} = require("linear-regression-model");
  // if it is preferred not to use destructuring, or constants use
- // var LinearModel = require("linear-regression-model").LinearModel;
+ // var LinearModel = require("linear-regression-model-model").LinearModel;
  ~~~
 Or if the use case for this is pending more to the behavior of one single dataset<br>
 overtime, this will be more fitting:
  ~~~ javascript
  const {LinearModelOverTime} = require("linear-regression-model");
  // if it is preferred not to use destructuring, or constants use
- // var LinearModelOverTime = require("linear-regression").LinearModelOverTime;
+ // var LinearModelOverTime = require("linear-regression-model").LinearModelOverTime;
  ~~~ 
+And to use the Correlation class, it will be some like this: 
+~~~ javascript
+ const {Correlation} = require("linear-regression-model");
+ // if it is preferred not to use destructuring, or constants use
+ // var Correlation = require("linear-regression-model").Correlation;
+ ~~~ 
+Although if your use case is the overtime behaviour, i would advise the use<br>
+of the [method](#correlation) in the LinearModelOverTime class<br>
+But if you are using the LinearModel class, it is really up to you
 ## Instantiate the classes
  ~~~ javascript
  const lm = new LinearModel([1, 2, 3, 2, 3, 4], [3, 4, 5, 4, 5, 6]);
@@ -47,7 +57,13 @@ overtime, this will be more fitting:
  //dependent variable: y changes according to how x changes, the later is 
  // generated automatically for a better representation of the behavior overtime
  ~~~ 
- 
+ or 
+ ~~~ javascript
+  const corr = new Correlation([1, 2, 3, 2, 3, 4], [3, 4, 5, 4, 5, 6]);
+ // mandatory to pass two, same sized, all number, arrays, being the 
+ // orientation (x, y), being x the independent variable and y the 
+ // dependent: y changes according to how x changes, basically
+ ~~~ 
  Let it be clear, it is necessary to pass all number arrays, with more than 1 value,<br>
  in order for the algorithm to work properly, it will try to convert all the elements<br>
  to numbers, but if that is not possible, the code will crash.
@@ -61,7 +77,7 @@ if the X axis dataset is informed or generated, therefore, the method will be sh
 the LinearModel class, the use for the LinearModelOverTime class is the exact same tough
 
 - Just to make it clear, it is necessary to pass the parameters as said in [instatiating the class](#instantiate-the-classes), above
-
+## LinearModel and LinearModelOverTime
 - getDataset
 ~~~ javascript
  lm.getDataset()
@@ -144,4 +160,29 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  // returns both the function as a string to be displayed
  // and an actual js function to make predictions, for example
  // function(x): returns Y, using the same method as the dataset
+~~~ 
+### Correlation
+- getCorrelation
+~~~ javascript
+ lm.getCorrelation()
+ // returns the correlation between the datasets 
+~~~ 
+
+## Correlation (class)
+- (static) getMean
+~~~ javascript
+ Correlation.getMean(dataset)
+ // returns the mean of the dataset
+~~~ 
+- (static) getDifferenceFromMeanAndElements
+~~~ javascript
+ Correlation.getDifferenceFromMeanAndElements(dataset)
+ // returns the difference between the mean and the elements
+ // of the dataset, so can be used to calculate variance, 
+ // for example
+~~~ 
+- getCorrelation
+~~~ javascript
+ corr.getCorrelation()
+ // returns the correlation between the datasets 
 ~~~ 

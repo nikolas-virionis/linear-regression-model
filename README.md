@@ -74,8 +74,8 @@ But if you are using the LinearModel class, it is really up to you
 
 ## Methods
 Both the classes have similar methods, the biggest difference between the classes being<br>
-if the X axis dataset is informed or generated, therefore, the method will be showed using <br>
-the LinearModel class, the use for the LinearModelOverTime class is the exact same tough
+if the X axis dataset is informed or generated, therefore, the method will be showed using
+the LinearModel class, the use for the LinearModelOverTime class is the exact same though
 
 - Just to make it clear, it is necessary to pass the parameters as said in [instatiating the class](#instantiate-the-classes), above
 ## LinearModel and LinearModelOverTime

@@ -1,5 +1,5 @@
 /**
- * @module linear-regression
+ * @module linear-regression-model
  * Represents the linear model class
  * of a dataset behaviour overtime
  * @author Nikolas B Virionis <nikolas.virionis@bandtec.com.br>
@@ -312,10 +312,22 @@ class LinearModelOverTime {
             function: x => x * this.getSlope() + this.getLinearCoefficient()
         };
     }
+
+    /**
+     * @method
+     * shortcut to get the correlation of the datasets
+     * @returns {number}
+     * returns the correlation between the two datasets
+     * in an easier way
+     */
+    getCorrelation() {
+        let corr = new Correlation(this._xValues, this._data);
+        return corr.getCorrelation();
+    }
 }
 
 /**
- * @module linear-regression
+ * @module linear-regression-model
  * Represents the linear model class
  * of a dataset behaviour in relation
  * to its counterpart
@@ -364,4 +376,135 @@ class LinearModel extends LinearModelOverTime {
     }
 }
 
-module.exports = {LinearModelOverTime, LinearModel};
+/**
+ * @module linear-regression-model
+ * Represents the correlation class
+ *
+ * @author Nikolas B Virionis <nikolas.virionis@bandtec.com.br>
+ */
+class Correlation {
+    /**
+     * @attributes
+     * - datasetY
+     * - datasetX <br>
+     * Both represent the datasets used
+     * for the correlation
+     */
+    datasetY;
+    datasetX;
+
+    /**
+     * @constructor
+     * @param {number[]} datasetX
+     * @param {number[]} datasetY
+     * The datasets the correlation is made with
+     */
+    constructor(datasetX, datasetY) {
+        if (!datasetX || !datasetY) {
+            throw "Two arrays are necessary for Correlation";
+        }
+        if (datasetX.length != datasetY.length) {
+            throw "The arrays have different lengths, which is not allowed";
+        }
+        if (!Array.isArray(datasetX) || !Array.isArray(datasetY)) {
+            throw "Constructor parameter is not an array";
+        }
+        if (datasetX.length < 2) {
+            throw "In order to design a linear model, you must provide at least 2 data points";
+        }
+        try {
+            datasetY = datasetY.map(el => Number(el));
+            datasetX = datasetX.map(el => Number(el));
+        } catch (e) {
+            throw `Some value in one of the datasets is invalid, or impossible to convert to number, \nError: ${e}`;
+        }
+        this.datasetY = datasetY;
+        this.datasetX = datasetX;
+    }
+
+    /**
+     * gets the mean of the dataset
+     * @param {number[]} dataset
+     * @returns {number} the mean, average, of the dataset
+     */
+    static getMean(dataset) {
+        return Correlation.#sumDataset(dataset) / dataset.length;
+    }
+
+    /**
+     * gets the difference between the mean and the elements of the dataset
+     * @param {number[]} dataset
+     * @returns {number[]}
+     */
+    static getDifferenceFromMeanAndElements(dataset) {
+        let data = dataset.map(
+            element => element - Correlation.getMean(dataset)
+        );
+        return data;
+    }
+
+    /**
+     * creates the secondary lists, used for the correlation
+     * @returns {number[][]} the secondary lists
+     */
+    #getSecondaryLists() {
+        let dataY = Correlation.getDifferenceFromMeanAndElements(this.datasetY);
+        let dataX = Correlation.getDifferenceFromMeanAndElements(this.datasetX);
+        return this.#fillSecondaryLists(dataX, dataY);
+    }
+    /**
+     * fills the secondary lists, used for the
+     * correlation, with their respective data
+     * @param {number[]} dataX
+     * @param {number[]} dataY
+     * @returns {number[][]} the secondary lists
+     */
+    #fillSecondaryLists(dataX, dataY) {
+        let ab = [];
+        let a2 = [];
+        let b2 = [];
+        for (let index in dataX) {
+            ab.push(dataX[index] * dataY[index]);
+            a2.push(dataX[index] ** 2);
+            b2.push(dataY[index] ** 2);
+        }
+        return [ab, a2, b2];
+    }
+
+    /**
+     * sums all the values of a dataset
+     * @param {number[]} dataset
+     * @returns {number}
+     */
+    static #sumDataset(dataset) {
+        return dataset.reduce((sum, element) => sum + element, 0);
+    }
+
+    /**
+     *  sums the secondary dataset values
+     * @param {number[]} ab
+     * @param {number[]} a2
+     * @param {number[]} b2
+     * @returns {number[]}
+     */
+    #getSumOfCorrDatasets(ab, a2, b2) {
+        let sumAb = Correlation.#sumDataset(ab);
+        let sumA2 = Correlation.#sumDataset(a2);
+        let sumB2 = Correlation.#sumDataset(b2);
+        return [sumAb, sumA2, sumB2];
+    }
+
+    /**
+     * ends the formula of the correlation
+     * and returns its value
+     * @returns {number} the correlation itself
+     */
+    getCorrelation() {
+        let [ab, a2, b2] = this.#getSecondaryLists();
+        let [sumAb, sumA2, sumB2] = this.#getSumOfCorrDatasets(ab, a2, b2);
+
+        return sumAb / (sumA2 * sumB2) ** (1 / 2);
+    }
+}
+
+module.exports = {LinearModelOverTime, LinearModel, Correlation};

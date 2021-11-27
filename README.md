@@ -17,6 +17,7 @@ An npm package to make it easier to deal with a handful of values, and try to mo
   - Installing the module<br>
 ~~~powershell
 npm install linear-regression-model
+
 ~~~
   - Importing the module<br>
 
@@ -32,7 +33,7 @@ overtime, this will be more fitting:
  ~~~ javascript
  const {LinearModelOverTime} = require("linear-regression-model");
  // if it is preferred not to use destructuring, or constants use
- // var LinearModelOverTime = require("linear-regression-model").LinearModelOverTime;
+ // var LinearModel = require("linear-regression-model").LinearModelOverTime;
  ~~~ 
 And to use the Correlation class, it will be some like this: 
 ~~~ javascript

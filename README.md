@@ -162,6 +162,12 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  // and an actual js function to make predictions, for example
  // function(x): returns Y, using the same method as the dataset
 ~~~ 
+- getR2
+~~~ javascript
+ lm.getR2()
+ // returns the coefficient of determination(R²) to find
+ // the accuracy of the linear regression just calculated
+~~~ 
 ### Correlation
 - getCorrelation
 ~~~ javascript

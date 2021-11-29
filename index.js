@@ -324,6 +324,30 @@ class LinearModelOverTime {
         let corr = new Correlation(this._xValues, this._data);
         return corr.getCorrelation();
     }
+
+    /**
+     * R² is the coefficient of the determination
+     * which, basically, verifies the accuracy of the
+     * linear model just calculated
+     * @returns {number} the coefficient of determination(R²)
+     */
+    getR2() {
+        let totalSumOfSquares = [
+            ...Correlation.getDifferenceFromMeanAndElements(this._data).map(
+                x => x ** 2
+            )
+        ].reduce((sum, x) => sum + x, 0);
+        let residualSumOfSquares = this._data.reduce(
+            (sum, element, index) =>
+                sum +
+                (element -
+                    (this.getSlope() * this._xValues[index] +
+                        this.getLinearCoefficient())) **
+                    2,
+            0
+        );
+        return 1 - residualSumOfSquares / totalSumOfSquares;
+    }
 }
 
 /**

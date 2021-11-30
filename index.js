@@ -69,6 +69,67 @@ class LinearModelOverTime {
     }
 
     /**
+     * Utility function to calculate the mean of a dataset
+     * @param {number[]} dataset
+     * @returns {number} the mean of the dataset
+     */
+    static getMean(dataset) {
+        return (
+            dataset.reduce((sum, element) => sum + element, 0) / dataset.length
+        );
+    }
+
+    /**
+     * Utility function to calculate the mode of a dataset
+     * @param {number[]} dataset
+     * @returns {number[]} the mode of the dataset
+     * Let it be noted that it can be more than one,
+     * in that case, the array of modes will have more than one value
+     */
+    static getMode(dataset) {
+        const datasetElements = {};
+        for (let element of dataset) {
+            if (!datasetElements[element]) {
+                datasetElements[element] = 1;
+                continue;
+            }
+            datasetElements[element]++;
+        }
+
+        let mode = [{key: -1, qtd: -1}];
+        for (let key in datasetElements) {
+            if (datasetElements[key] > mode[0].qtd) {
+                mode = [{key, qtd: datasetElements[key]}];
+            }
+            if (
+                datasetElements[key] == mode[0].qtd &&
+                !mode.map(el => el.key).includes(key)
+            ) {
+                mode.push({key, qtd: datasetElements[key]});
+            }
+        }
+        return mode.map(({key}) => Number(key));
+    }
+
+    /**
+     * Utility function to calculate the median of a dataset
+     * @param {number[]} dataset
+     * @returns {number} the median of the dataset
+     */
+    static getMedian(dataset) {
+        dataset = dataset.sort((a, b) => a - b);
+        console.log(dataset);
+        if (dataset.length % 2 === 0) {
+            return LinearModelOverTime.getMean([
+                dataset[dataset.length / 2 - 1],
+                dataset[dataset.length / 2]
+            ]);
+        } else {
+            return Math.ceil(dataset[dataset.length / 2]);
+        }
+    }
+
+    /**
      * @method
      * returns the dataset on the Y axis
      * @returns {number[]}

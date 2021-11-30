@@ -96,6 +96,21 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  // converts an angle in radians to degrees
  // returns the angle in degrees
 ~~~ 
+- (static) getMean
+~~~ javascript
+ LinearModel.getMean(dataset)
+ // Utility method to calculate the mean of a dataset
+~~~ 
+- (static) getMode
+~~~ javascript
+ LinearModel.getMode(dataset)
+ // Utility method to calculate the mode of a dataset
+~~~ 
+- (static) getMedian
+~~~ javascript
+ LinearModel.getMedian(dataset)
+ // Utility method to calculate the median of a dataset
+~~~ 
 - getDatasetLength
 ~~~ javascript
  lm.getDatasetLength()

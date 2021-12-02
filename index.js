@@ -125,7 +125,7 @@ class LinearModelOverTime {
                 dataset[dataset.length / 2]
             ]);
         } else {
-            return Math.ceil(dataset[dataset.length / 2]);
+            return dataset[Math.ceil(dataset.length / 2)];
         }
     }
 

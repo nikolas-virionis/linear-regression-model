@@ -118,7 +118,6 @@ class LinearModelOverTime {
      */
     static getMedian(dataset) {
         dataset = dataset.sort((a, b) => a - b);
-        console.log(dataset);
         if (dataset.length % 2 === 0) {
             return LinearModelOverTime.getMean([
                 dataset[dataset.length / 2 - 1],

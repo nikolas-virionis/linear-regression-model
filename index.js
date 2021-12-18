@@ -386,6 +386,18 @@ class LinearModelOverTime {
     }
 
     /**
+     * @method
+     * shortcut to get the correlation interpretation
+     * @returns {number}
+     * returns the correlation interpretation between
+     * the two datasets in an easier way
+     */
+    getCorrelationInterpretation() {
+        let corr = new Correlation(this._xValues, this._data);
+        return corr.getCorrelationInterpretation();
+    }
+
+    /**
      * R² is the coefficient of the determination
      * which, basically, verifies the accuracy of the
      * linear model just calculated
@@ -588,6 +600,54 @@ class Correlation {
         let [sumAb, sumA2, sumB2] = this.#getSumOfCorrDatasets(ab, a2, b2);
 
         return sumAb / (sumA2 * sumB2) ** (1 / 2);
+    }
+
+    /**
+     * @method
+     * returns the way the two datasets are correlated to each other
+     * @returns {string} the sign/way the datasets are correlated
+     */
+    getCorrelationWay() {
+        let corr = this.getCorrelation();
+        if (this.getCorrelationIntensity() === "nearly independent") {
+            return "negligible way";
+        }
+        if (corr > 0) {
+            return "positive way";
+        }
+        return "negative way";
+    }
+
+    /**
+     * @method
+     * returns the intensity by which the two datasets are correlated to each other
+     * @returns {string} the correlation intensity itself
+     */
+    getCorrelationIntensity() {
+        let corr = this.getCorrelation();
+        if (Math.abs(corr) > 0.9) {
+            return "highly correlated";
+        }
+        if (Math.abs(corr) > 0.7) {
+            return "strongly correlated";
+        }
+        if (Math.abs(corr) > 0.5) {
+            return "moderately correlated";
+        }
+        if (Math.abs(corr) > 0.3) {
+            return "barely correlated";
+        }
+        return "nearly independent";
+    }
+
+    /**
+     * @method
+     * returns the interpretation of the correlation index,
+     * so its easier to abstract an insight out of it
+     * @returns {string} the whole correlation interpretation
+     */
+    getCorrelationInterpretation() {
+        return `${this.getCorrelationIntensity()} in a ${this.getCorrelationWay()}`;
     }
 }
 

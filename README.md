@@ -189,6 +189,12 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  lm.getCorrelation()
  // returns the correlation between the datasets 
 ~~~ 
+- getCorrelationInterpretation
+~~~ javascript
+ lm.getCorrelationInterpretation()
+ // returns the interpretation of the correlation index
+ // between the datasets 
+~~~ 
 
 ## Correlation (class)
 - (static) getMean
@@ -200,11 +206,28 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
 ~~~ javascript
  Correlation.getDifferenceFromMeanAndElements(dataset)
  // returns the difference between the mean and the elements
- // of the dataset, so can be used to calculate variance, 
- // for example
+ // of the dataset, so can be used to calculate variance 
+ // or standard deviation, for example
 ~~~ 
 - getCorrelation
 ~~~ javascript
  corr.getCorrelation()
  // returns the correlation between the datasets 
+~~~ 
+- getCorrelationWay
+~~~ javascript
+ corr.getCorrelationWay()
+ // returns the way/sign the two datasets are correlated 
+ // to each other
+~~~ 
+- getCorrelationIntensity
+~~~ javascript
+ corr.getCorrelationIntensity()
+ // returns the intensity of the correlation between the datasets 
+~~~ 
+- getCorrelationInterpretation
+~~~ javascript
+ corr.getCorrelationInterpretation()
+ // returns the interpretation of the correlation index
+ // between the datasets 
 ~~~ 

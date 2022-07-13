@@ -1,6 +1,6 @@
 {
     "name": "linear-regression-model",
-    "version": "1.4.1",
+    "version": "1.4.2",
     "description": "A npm package to make it easier to deal with a bunch of values, and try to model them in one of the most used mathematical models",
     "main": "index.js",
     "scripts": {
@@ -8,12 +8,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/nikolas-virionis/linear-regression.git"
+        "url": "git+https://github.com/nikolas-virionis/linear-regression-model.git"
     },
     "author": "nikolas-virionis",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/nikolas-virionis/linear-regression/issues"
+        "url": "https://github.com/nikolas-virionis/linear-regression-model/issues"
     },
-    "homepage": "https://github.com/nikolas-virionis/linear-regression#readme"
+    "homepage": "https://github.com/nikolas-virionis/linear-regression-model#readme"
 }

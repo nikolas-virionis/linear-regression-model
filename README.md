@@ -239,12 +239,12 @@ the LinearModel class, the use for the LinearModelOverTime class is the exact sa
  // between the datasets
 ~~~
 
-## Contributing
+# Contributing
 Well, since this is a really simple package, contributing is always welcome, just as much as creating issues experienced with the package
 
 In order to better organize this contributions, it would be ideal that all PRs follow the template:
 
-### PR Template
+## PR Template
  WHAT: <br>
  A brief description of the improvements
  
@@ -254,6 +254,6 @@ A explanation on why those changes were needed, necessary, or at least, why is w
 CHANGES: <br>
 List of changes made, can be the name of the commits made, or a simple changes list
 
-### Commits
+## Commits
 Ideally the commits should make use of the convention of [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) <br>
 Something i recommend is the usage of either the [Commitizen](https://github.com/commitizen/cz-cli) terminal extension or the [Commit Message Editor](https://marketplace.visualstudio.com/items?itemName=adam-bender.commit-message-editor) VSCode Extension

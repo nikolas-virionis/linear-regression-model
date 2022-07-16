@@ -1,6 +1,9 @@
 # linear-regression-model
-An npm package to make it easier to deal with a handful of values, and try to model them in one of the most used mathematical models, with an R-like accuracy algorithm
-
+An npm package to make it easier to deal with a handful of values, and try to model them in one of the most used mathematical models, with an R-like accuracy algorithm<br>
+![npm](https://img.shields.io/npm/v/linear-regression-model)
+![GitHub repo size](https://img.shields.io/github/repo-size/nikolas-virionis/linear-regression-model)
+![GitHub last commit](https://img.shields.io/github/last-commit/nikolas-virionis/linear-regression-model?style=plastic)
+![npm](https://img.shields.io/npm/dy/linear-regression-model?style=plastic)<br>
 ![npm logo](./npmlogo.png)
 
 - [Setup](#setup)
